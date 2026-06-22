@@ -1,0 +1,199 @@
+.floatingBall {
+  position: absolute;
+  right: 16px;
+  bottom: 45px;
+  width: 64px;
+  height: 64px;
+  cursor: grab;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.15s ease;
+  user-select: none;
+  touch-action: none;
+  background: transparent;
+  border: none;
+  overflow: visible;
+}
+
+.floatingBall:hover .leftArm {
+  animation: waveLeft 0.4s ease-in-out infinite alternate;
+}
+
+.floatingBall:hover .rightArm {
+  animation: waveRight 0.4s ease-in-out infinite alternate;
+}
+
+.floatingBall.dragging {
+  cursor: grabbing;
+}
+
+.petContainer {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.parachute {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 72px;
+  height: 56px;
+  animation: parachuteSwing 0.8s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+
+@keyframes parachuteSwing {
+  0% {
+    transform: translateX(-50%) rotate(-5deg);
+  }
+  100% {
+    transform: translateX(-50%) rotate(5deg);
+  }
+}
+
+.pixelPet {
+  width: 64px;
+  height: 64px;
+  image-rendering: pixelated;
+}
+
+.eyes {
+  transform-origin: center 37.5%;
+  animation: blink 2s infinite;
+}
+
+@keyframes blink {
+  0%, 95%, 100% {
+    transform: scaleY(1);
+  }
+  97.5% {
+    transform: scaleY(0.1);
+  }
+}
+
+.leftArm {
+  transform-origin: 8px 9px;
+}
+
+.rightArm {
+  transform-origin: 24px 9px;
+}
+
+.sleeping .eyes {
+  animation: none !important;
+}
+
+.sleeping .leftArm,
+.sleeping .rightArm {
+  animation: none !important;
+}
+
+.zzz {
+  position: absolute;
+  top: -25px;
+  left: 15%;
+  pointer-events: none;
+  width: 70px;
+  height: 45px;
+}
+
+.zzzText {
+  position: absolute;
+  font-size: 22px;
+  font-weight: bold;
+  color: #999;
+  animation: zzzFloat 2s ease-in-out infinite;
+  bottom: 0;
+  left: 8px;
+}
+
+.zzzText2 {
+  position: absolute;
+  font-size: 18px;
+  font-weight: bold;
+  color: #aaa;
+  animation: zzzFloat 2s ease-in-out infinite 0.4s;
+  bottom: 12px;
+  left: 22px;
+}
+
+.zzzText3 {
+  position: absolute;
+  font-size: 14px;
+  font-weight: bold;
+  color: #bbb;
+  animation: zzzFloat 2s ease-in-out infinite 0.8s;
+  bottom: 24px;
+  left: 34px;
+}
+
+@keyframes zzzFloat {
+  0% {
+    opacity: 0;
+    transform: translateY(0);
+  }
+  30% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-16px);
+  }
+}
+
+@keyframes waveLeft {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(-20deg);
+  }
+}
+
+@keyframes waveRight {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(20deg);
+  }
+}
+
+.tooltip {
+  position: absolute;
+  right: calc(100% + 8px);
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.85);
+  color: white;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.2s ease;
+  pointer-events: none;
+}
+
+.floatingBall:hover .tooltip {
+  opacity: 1;
+  visibility: visible;
+}
+
+.tooltip::after {
+  content: '';
+  position: absolute;
+  right: -5px;
+  top: 50%;
+  transform: translateY(-50%);
+  border-left: 5px solid rgba(0, 0, 0, 0.85);
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+}

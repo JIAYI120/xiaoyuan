@@ -1,0 +1,47 @@
+:root {
+  --wechat: #07C160;
+  --wechat-dark: #06AD56;
+  --wechat-light: #E7F8EE;
+  --bg: #F7F7F8;
+  --text-primary: #1A1A1B;
+  --text-secondary: #6B6C6E;
+  --text-hint: #A0A0A2;
+  --border: #E8E8E8;
+  --border-focus: #07C160;
+  --card: #FFFFFF;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', sans-serif;
+  background-color: var(--bg);
+  color: var(--text-primary);
+  min-height: 100vh;
+  line-height: 1.6;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+::selection {
+  background-color: var(--wechat-light);
+  color: var(--wechat);
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+@keyframes modalIn {
+  from { opacity: 0; transform: translateY(12px) scale(0.97); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}

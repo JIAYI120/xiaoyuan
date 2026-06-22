@@ -1,0 +1,400 @@
+.page {
+  position: relative;
+  width: 390px;
+  height: 844px;
+  overflow: hidden;
+  display: flex;
+  align-items: stretch;
+  justify-content: flex-start;
+  background: #f5f5f5;
+}
+
+.phoneFrame {
+  position: relative;
+  width: 390px;
+  height: 844px;
+  flex-shrink: 0;
+  overflow: hidden;
+  border-radius: 0;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15), inset 0 0 0 4px rgba(0, 0, 0, 0.06);
+  background: #f5f5f5;
+  display: flex;
+  flex-direction: column;
+}
+
+.navBar {
+  height: 56px;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  flex-shrink: 0;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.navLeft {
+  width: 72px;
+  display: flex;
+  align-items: center;
+}
+
+.backBtn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #1a1a1b;
+  transition: background 0.2s;
+}
+
+.backBtn:hover {
+  background: #f5f5f5;
+}
+
+.navTitle {
+  font-size: 17px;
+  font-weight: 600;
+  color: #1a1a1b;
+}
+
+.navRight {
+  width: 72px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.saveBtn {
+  padding: 6px 16px;
+  background: #07C160;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: 18px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.saveBtn:hover {
+  background: #06AD56;
+}
+
+.saveBtn:active {
+  transform: scale(0.96);
+}
+
+.body {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.body::-webkit-scrollbar {
+  display: none;
+}
+
+.avatarSection {
+  background: #fff;
+  margin-top: 12px;
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.avatarLabel {
+  font-size: 15px;
+  color: #1a1a1b;
+}
+
+.avatarBtn {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #07C160 0%, #06AD56 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  font-weight: 700;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.avatarBtn:hover {
+  transform: scale(1.05);
+}
+
+.avatarBtn:active {
+  transform: scale(0.95);
+}
+
+.fieldList {
+  background: #fff;
+  margin-top: 12px;
+}
+
+.fieldItem {
+  display: flex;
+  align-items: center;
+  padding: 0 24px;
+  height: 56px;
+  background: none;
+  border: none;
+  width: 100%;
+  cursor: pointer;
+  transition: background 0.2s;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.fieldItem:hover {
+  background: #fafafa;
+}
+
+.fieldItem + .fieldItem {
+  border-top: 1px solid #f5f5f5;
+}
+
+.fieldLabel {
+  width: 80px;
+  font-size: 15px;
+  color: #1a1a1b;
+  flex-shrink: 0;
+}
+
+.fieldValue {
+  flex: 1;
+  text-align: right;
+  font-size: 15px;
+  color: #9CA3AF;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.fieldValue.hasValue {
+  color: #1a1a1b;
+}
+
+.fieldArrow {
+  margin-left: 8px;
+  color: #d0d0d0;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+}
+
+.fieldInput {
+  flex: 1;
+  text-align: right;
+  font-size: 15px;
+  color: #1a1a1b;
+  background: transparent;
+  border: none;
+  outline: none;
+  padding: 0;
+  height: 100%;
+}
+
+.fieldInput::placeholder {
+  color: #d0d0d0;
+}
+
+.fieldTextarea {
+  flex: 1;
+  text-align: right;
+  font-size: 15px;
+  color: #1a1a1b;
+  background: transparent;
+  border: none;
+  outline: none;
+  padding: 8px 0;
+  resize: none;
+  line-height: 1.5;
+  min-height: 56px;
+}
+
+.fieldTextarea::placeholder {
+  color: #d0d0d0;
+}
+
+.bioSection {
+  background: #fff;
+  margin-top: 12px;
+  padding: 0 24px;
+  min-height: 88px;
+  display: flex;
+  align-items: flex-start;
+}
+
+.bioLabel {
+  width: 80px;
+  font-size: 15px;
+  color: #1a1a1b;
+  flex-shrink: 0;
+  padding-top: 16px;
+}
+
+.bioTextarea {
+  flex: 1;
+  font-size: 15px;
+  color: #1a1a1b;
+  background: transparent;
+  border: none;
+  outline: none;
+  padding: 16px 0;
+  resize: none;
+  line-height: 1.5;
+  min-height: 88px;
+  text-align: right;
+}
+
+.bioTextarea::placeholder {
+  color: #d0d0d0;
+}
+
+.hint {
+  font-size: 12px;
+  color: #d0d0d0;
+  padding: 12px 24px 0;
+}
+
+.toast {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(0, 0, 0, 0.7);
+  color: #fff;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 14px;
+  z-index: 9999;
+  animation: toastIn 0.2s ease-out;
+}
+
+@keyframes toastIn {
+  from { opacity: 0; transform: translate(-50%, -50%) scale(0.9); }
+  to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
+
+.pickerOverlay {
+  position: absolute;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.pickerBackdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.pickerContainer {
+  position: relative;
+  background: #fff;
+  border-radius: 16px 16px 0 0;
+  padding-bottom: 24px;
+  animation: pickerSlideUp 0.25s ease-out;
+}
+
+@keyframes pickerSlideUp {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+
+.pickerHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 24px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.pickerCancel {
+  font-size: 15px;
+  color: #9CA3AF;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px 8px;
+}
+
+.pickerTitle {
+  font-size: 16px;
+  font-weight: 600;
+  color: #1a1a1b;
+}
+
+.pickerConfirm {
+  font-size: 15px;
+  color: #07C160;
+  font-weight: 500;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px 8px;
+}
+
+.pickerBody {
+  max-height: 300px;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.pickerOption {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px 24px;
+  font-size: 16px;
+  color: #1a1a1b;
+  background: none;
+  border: none;
+  width: 100%;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.pickerOption:hover {
+  background: #f9f9f9;
+}
+
+.pickerOption.selected {
+  color: #07C160;
+  font-weight: 600;
+}
+
+.pickerOption + .pickerOption {
+  border-top: 1px solid #f5f5f5;
+}
+
+.dateBreadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 24px 0;
+}
+
+.crumb {
+  font-size: 13px;
+  color: #07C160;
+  background: #f0faf4;
+  border: none;
+  border-radius: 12px;
+  padding: 4px 12px;
+  cursor: pointer;
+}

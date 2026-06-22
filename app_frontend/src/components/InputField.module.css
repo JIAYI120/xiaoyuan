@@ -1,0 +1,109 @@
+.container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  height: 52px;
+  padding: 0 16px 0 20px;
+  background: #f5f6f7;
+  border: 2px solid transparent;
+  border-radius: 12px;
+  cursor: text;
+  transition: all 0.3s ease-out;
+}
+
+.container:hover {
+  background: #eef0f2;
+}
+
+.container.focused {
+  background: #fff;
+  border-color: rgba(7, 193, 96, 0.3);
+  box-shadow: 0 0 0 3px rgba(7, 193, 96, 0.08);
+}
+
+.icon {
+  flex-shrink: 0;
+  color: #a0a0a2;
+  transition: color 0.3s;
+}
+
+.icon.active {
+  color: #07C160;
+}
+
+.inputWrapper {
+  flex: 1;
+  position: relative;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.label {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  white-space: nowrap;
+  font-size: 14px;
+  color: #a0a0a2;
+  opacity: 0.5;
+  transition: all 0.2s ease-out;
+}
+
+.label.hidden {
+  opacity: 0;
+  transform: translateY(-50%) scale(0.95);
+}
+
+.input {
+  width: 100%;
+  background: transparent;
+  outline: none;
+  border: none;
+  font-size: 14px;
+  color: #1a1a1b;
+}
+
+.input::-ms-reveal,
+.input::-ms-clear {
+  display: none;
+}
+
+.input::-webkit-textfield-decoration-container,
+.input::-webkit-auto-fill-button,
+.input::-webkit-strong-password-auto-fill-button,
+.input[type="password"]::-webkit-reveal {
+  display: none;
+  visibility: hidden;
+  pointer-events: none;
+  height: 0;
+  width: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.dot {
+  flex-shrink: 0;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: transparent;
+  opacity: 0;
+  transform: scale(0);
+  transition: all 0.3s ease-out;
+}
+
+.dot.active {
+  background: #07C160;
+  opacity: 1;
+  transform: scale(1);
+}
+
+.suffix {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+}

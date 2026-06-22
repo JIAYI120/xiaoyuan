@@ -1,0 +1,10 @@
+.layout {
+  position: relative;
+  width: 390px;
+  min-width: 390px;
+  max-width: 390px;
+  height: 844px;
+  min-height: 844px;
+  max-height: 844px;
+  margin: 0 auto;
+}

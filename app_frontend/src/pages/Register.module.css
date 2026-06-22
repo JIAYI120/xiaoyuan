@@ -1,0 +1,238 @@
+.page {
+  position: relative;
+  width: 390px;
+  height: 844px;
+  overflow: hidden;
+  display: flex;
+  align-items: stretch;
+  justify-content: flex-start;
+  background: linear-gradient(135deg, #e8f8ee 0%, #d4f1e0 100%);
+}
+
+.phoneFrame {
+  position: relative;
+  width: 390px;
+  height: 844px;
+  flex-shrink: 0;
+  overflow: hidden;
+  border-radius: 0;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15), inset 0 0 0 4px rgba(0, 0, 0, 0.06);
+  background: linear-gradient(135deg, #e8f8ee 0%, #d4f1e0 100%);
+}
+
+.illustrationBg {
+  position: absolute;
+  inset: 0;
+}
+
+.gridOverlay {
+  position: absolute;
+  inset: 0;
+  opacity: 0.04;
+  background-image: radial-gradient(circle at 1px 1px, #07C160 1px, transparent 0);
+  background-size: 32px 32px;
+}
+
+.content {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  box-sizing: border-box;
+}
+
+.card {
+  width: 100%;
+  height: auto;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-radius: 20px;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.12);
+  padding: 32px 28px;
+  box-sizing: border-box;
+}
+
+.cardHeader {
+  margin-bottom: 28px;
+  text-align: center;
+}
+
+.logo {
+  width: 52px;
+  height: 52px;
+  border-radius: 16px;
+  background: #07C160;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 16px;
+  box-shadow: 0 10px 15px -3px rgba(7, 193, 96, 0.2);
+}
+
+.title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #1a1a1b;
+  margin-bottom: 6px;
+}
+
+.subtitle {
+  font-size: 13px;
+  color: #a0a0a2;
+}
+
+.errorBox {
+  margin-bottom: 20px;
+  padding: 10px 14px;
+  background: #fef2f2;
+  color: #ef4444;
+  font-size: 13px;
+  border-radius: 8px;
+  border: 1px solid #fecaca;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.fieldGroup label {
+  display: block;
+  font-size: 13px;
+  font-weight: 500;
+  color: #6b6c6e;
+  margin-bottom: 8px;
+}
+
+.buttonGroup {
+  padding-top: 12px;
+}
+
+.submitBtn {
+  width: 100%;
+  height: 46px;
+  background: #07C160;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 500;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 10px 15px -3px rgba(7, 193, 96, 0.2);
+}
+
+.submitBtn:hover {
+  background: #06AD56;
+}
+
+.submitBtn:active {
+  transform: scale(0.98);
+}
+
+.submitBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.switchLink {
+  text-align: center;
+  margin-top: 16px;
+  font-size: 13px;
+  color: #a0a0a2;
+}
+
+.switchLink a {
+  color: #07C160;
+  font-weight: 500;
+  margin-left: 4px;
+  transition: color 0.2s;
+}
+
+.switchLink a:hover {
+  color: #06AD56;
+}
+
+.agreement {
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid #f0f0f0;
+}
+
+.agreementLabel {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.checkboxWrapper {
+  position: relative;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.checkboxInput {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+.checkboxBox {
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+  border: 2px solid #d0d0d0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.checkboxInput:checked + .checkboxBox {
+  border-color: #07C160;
+  background: #07C160;
+}
+
+.agreementText {
+  font-size: 12px;
+  color: #a0a0a2;
+  line-height: 1.6;
+}
+
+.link {
+  color: #07C160;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.link:hover {
+  color: #06AD56;
+}
+
+.eyeBtn {
+  padding: 4px;
+  color: #a0a0a2;
+  cursor: pointer;
+  background: none;
+  border: none;
+  transition: color 0.2s;
+  display: flex;
+  align-items: center;
+}
+
+.eyeBtn:hover {
+  color: #6b6c6e;
+}
