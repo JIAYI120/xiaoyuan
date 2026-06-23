@@ -8,7 +8,7 @@ const port = process.env.PORT || 3000;
 
 // 跨域配置，放行所有vercel前端域名与自定义token头
 app.use(cors({
-  origin: /\.vercel\.app$/,
+  origin: /\.(vercel\.app|up\.railway\.app)$/,
   allowedHeaders: ['Content-Type', 'x-auth-token'],
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
 }));
