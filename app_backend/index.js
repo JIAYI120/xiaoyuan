@@ -6,14 +6,12 @@ require('dotenv').config();
 const app = express();
 const port = process.env.PORT || 3000;
 
-// 跨域配置，放行所有vercel前端域名与自定义token头
 app.use(cors({
-  origin: /\.(vercel\.app|up\.railway\.app)$/,
+  origin: /^(https?:\/\/localhost:\d+|[a-zA-Z0-9_-]+\.up\.railway\.app)$/,
   allowedHeaders: ['Content-Type', 'x-auth-token'],
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
 }));
 
-// 中间件拦截OPTIONS预检，规避 app.options('*') 正则解析报错
 app.use((req, res, next) => {
   if (req.method === 'OPTIONS') {
     return res.sendStatus(204);
@@ -21,15 +19,13 @@ app.use((req, res, next) => {
   next();
 });
 
-// 解析json请求体
 app.use(express.json());
 
-// 根路由测试
 app.get('/', (req, res) => {
   res.send('Hello, xiaoyuanAPP!');
 });
 
-// 请求日志打印中间件
+
 app.use((req, res, next) => {
   console.log(`${new Date().toISOString()} ${req.method} ${req.path}`);
   next();

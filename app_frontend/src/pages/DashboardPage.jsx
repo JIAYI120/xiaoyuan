@@ -4,7 +4,6 @@ import { useAuth } from '../context/AuthContext';
 import { usePostState } from '../context/PostStateContext';
 import apiClient from '../api/axios';
 import PublishModal from '../components/PublishModal';
-import CommentModal from '../components/CommentModal';
 import MessagesPage from './MessagesPage';
 import styles from './Dashboard.module.css';
 import postStyles from './MyPosts.module.css';
@@ -107,7 +106,7 @@ function TruncatedContent({ text, postId, detailState, onViewDetail }) {
   );
 }
 
-function FeedPostCard({ post, onLike, onComment, onBookmark, onAvatarClick, isOwn, onDelete, detailState, onViewDetail }) {
+function FeedPostCard({ post, onLike, onBookmark, onAvatarClick, isOwn, onDelete, detailState, onViewDetail }) {
   const initial = post.nickname ? post.nickname.charAt(0).toUpperCase() : 'U';
 
   return (
@@ -140,14 +139,14 @@ function FeedPostCard({ post, onLike, onComment, onBookmark, onAvatarClick, isOw
         </div>
       )}
       <div className={postStyles.postActions}>
-        <button className={postStyles.actionBtn} onClick={() => onComment(post._id)}>
+        <span className={postStyles.actionBtn}>
           <span className={postStyles.actionIcon}>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
               <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" />
             </svg>
           </span>
           {post.commentCount || 0}
-        </button>
+        </span>
         <button
           className={`${postStyles.actionBtn} ${post.liked ? postStyles.liked : ''}`}
           onClick={() => onLike(post._id)}
@@ -212,7 +211,6 @@ function PostFeed({ refreshKey, endpoint, emptyTitle, emptyDesc, emptyIcon, acti
   const { updatedPosts, refreshTriggers } = usePostState();
   const [feed, setFeed] = useState(() => cachedDataRef.current[endpoint] || []);
   const [loading, setLoading] = useState(() => !cachedDataRef.current[endpoint]);
-  const [commentPostId, setCommentPostId] = useState(null);
   const [searchText, setSearchText] = useState('');
   const [searchType, setSearchType] = useState('post');
   const [randomPost, setRandomPost] = useState(null);
@@ -641,12 +639,6 @@ function PostFeed({ refreshKey, endpoint, emptyTitle, emptyDesc, emptyIcon, acti
     }
   }, [updateFeed]);
 
-  const handleCommentCountChange = useCallback((delta) => {
-    if (commentPostId) {
-      updateFeed(prev => prev.map(p => p._id === commentPostId ? { ...p, commentCount: (p.commentCount || 0) + delta } : p));
-    }
-  }, [commentPostId, updateFeed]);
-
   const handleViewDetail = useCallback(() => {
     const panel = panelRef.current;
     detailReturnScrollRef.current[endpoint] = panel ? panel.scrollTop : 0;
@@ -780,7 +772,6 @@ function PostFeed({ refreshKey, endpoint, emptyTitle, emptyDesc, emptyIcon, acti
             <FeedPostCard
               post={randomPost}
               onLike={handleLike}
-              onComment={(id) => setCommentPostId(id)}
               onBookmark={handleBookmark}
               onAvatarClick={(userId) => navigate(`/user/${userId}`)}
               isOwn={false}
@@ -788,12 +779,6 @@ function PostFeed({ refreshKey, endpoint, emptyTitle, emptyDesc, emptyIcon, acti
               onViewDetail={handleViewDetail}
             />
           </div>
-          <CommentModal
-            open={!!commentPostId}
-            postId={commentPostId}
-            onClose={() => setCommentPostId(null)}
-            onCountChange={handleCommentCountChange}
-          />
         </div>
       ) : isRandomMode && showRandomEmptyState ? (
         <div className={styles.tabContent}>
@@ -886,7 +871,6 @@ function PostFeed({ refreshKey, endpoint, emptyTitle, emptyDesc, emptyIcon, acti
                 key={post._id}
                 post={post}
                 onLike={handleLike}
-                onComment={(id) => setCommentPostId(id)}
                 onBookmark={handleBookmark}
                 onAvatarClick={(userId) => navigate(`/user/${userId}`)}
                 isOwn={user && post.user === user._id}
@@ -896,12 +880,6 @@ function PostFeed({ refreshKey, endpoint, emptyTitle, emptyDesc, emptyIcon, acti
               />
             ))}
           </div>
-          <CommentModal
-            open={!!commentPostId}
-            postId={commentPostId}
-            onClose={() => setCommentPostId(null)}
-            onCountChange={handleCommentCountChange}
-          />
         </>
       )}
     </div>

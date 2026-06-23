@@ -3,7 +3,6 @@ import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { usePostState } from '../context/PostStateContext';
 import apiClient from '../api/axios';
-import CommentModal from '../components/CommentModal';
 import styles from './PostDetail.module.css';
 
 function formatPostTime(dateStr) {
@@ -44,7 +43,6 @@ function PostDetailPage() {
   const [post, setPost] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const [commentPostId, setCommentPostId] = useState(null);
   const [showImageModal, setShowImageModal] = useState(null);
   const [comments, setComments] = useState([]);
   const [commentsLoading, setCommentsLoading] = useState(false);
@@ -312,12 +310,12 @@ function PostDetailPage() {
             </div>
 
             <div className={styles.actionsBar}>
-              <button className={styles.actionItem} onClick={() => setCommentPostId(post._id)}>
+              <span className={styles.actionItem}>
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" />
                 </svg>
                 <span>{post.commentCount || 0}</span>
-              </button>
+              </span>
               <button 
                 className={`${styles.actionItem} ${post.liked ? styles.liked : ''}`}
                 onClick={() => handleLike(post._id)}
@@ -414,30 +412,6 @@ function PostDetailPage() {
           </button>
         </div>
       </div>
-
-      {commentPostId && (
-        <CommentModal
-          open={!!commentPostId}
-          postId={commentPostId}
-          onClose={() => setCommentPostId(null)}
-          onCountChange={(change) => {
-            setPost(prev => ({
-              ...prev,
-              commentCount: Math.max(0, (prev.commentCount || 0) + change),
-            }));
-            // 刷新评论列表
-            const fetchComments = async () => {
-              try {
-                const res = await apiClient.get(`/comments/${id}`);
-                setComments(Array.isArray(res.data) ? res.data : []);
-              } catch {
-                setComments([]);
-              }
-            };
-            fetchComments();
-          }}
-        />
-      )}
 
       {showImageModal && (
         <div className={styles.imageModal} onClick={() => setShowImageModal(null)}>

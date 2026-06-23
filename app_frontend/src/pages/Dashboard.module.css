@@ -1,7 +1,7 @@
 .page {
   position: relative;
-  width: 390px;
-  height: 844px;
+  width: 100%;
+  min-height: 100vh;
   overflow: hidden;
   display: flex;
   align-items: stretch;
@@ -11,8 +11,8 @@
 
 .phoneFrame {
   position: relative;
-  width: 390px;
-  height: 844px;
+  width: 100%;
+  min-height: 100vh;
   flex-shrink: 0;
   overflow: hidden;
   border-radius: 0;
@@ -20,6 +20,30 @@
   background: #e8f8ee;
   display: flex;
   flex-direction: column;
+}
+
+/* 移动端适配 */
+@media (max-width: 430px) {
+  .page {
+    min-height: 100vh;
+  }
+  
+  .phoneFrame {
+    min-height: 100vh;
+  }
+}
+
+/* 平板和桌面端适配 */
+@media (min-width: 768px) {
+  .page {
+    min-height: calc(100vh - 40px);
+    max-height: 900px;
+  }
+  
+  .phoneFrame {
+    min-height: calc(100vh - 40px);
+    max-height: 900px;
+  }
 }
 
 .header {
@@ -78,7 +102,10 @@
 .content {
   position: relative;
   flex: 1;
+  min-height: 0;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 .pagePanel {
@@ -92,6 +119,8 @@
   background: #e8f8ee;
   transition: transform 0.28s ease, opacity 0.28s ease;
   will-change: transform, opacity;
+  display: flex;
+  flex-direction: column;
 }
 
 .pagePanel::-webkit-scrollbar {
@@ -232,6 +261,26 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
+  overflow-y: auto;
+  flex: 1;
+  min-height: 0;
+  max-height: 100%;
+}
+
+/* 移动端安全区域适配 */
+@media (max-width: 430px) {
+  .searchUserList {
+    flex: 1;
+    max-height: calc(100vh - 260px);
+    max-height: calc(100dvh - 260px);
+  }
+}
+
+/* 平板和桌面端 */
+@media (min-width: 768px) {
+  .searchUserList {
+    max-height: 400px;
+  }
 }
 
 .searchUserCard {
@@ -298,13 +347,15 @@
 }
 
 .tabContent {
-  min-height: calc(844px - 160px);
+  flex: 1;
+  min-height: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   padding: 32px 24px 24px;
   box-sizing: border-box;
+  overflow: hidden;
 }
 
 .emptyIcon {
@@ -658,23 +709,26 @@
 }
 
 .randomCardContainer {
-  min-height: calc(844px - 160px);
+  flex: 1;
+  min-height: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 24px 16px;
-  perspective: 1000px;
   background: #e8f8ee;
+  overflow: hidden;
 }
 
 .randomCard {
   width: 100%;
   max-width: 340px;
+  max-height: 100%;
   background: #fff;
   border-radius: 24px;
   box-shadow: 0 20px 60px rgba(15, 23, 42, 0.15), 0 8px 24px rgba(15, 23, 42, 0.08);
   overflow: hidden;
-  transform-style: preserve-3d;
+  display: flex;
+  flex-direction: column;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 

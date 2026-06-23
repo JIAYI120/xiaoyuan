@@ -2,7 +2,6 @@ import { useEffect, useState, useCallback } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import apiClient from '../api/axios';
-import CommentModal from '../components/CommentModal';
 import styles from './UserProfile.module.css';
 
 function formatPostTime(dateStr) {
@@ -54,7 +53,6 @@ function UserProfilePage() {
   const [mutual, setMutual] = useState(false);
   const [followedByTarget, setFollowedByTarget] = useState(false);
   const [fansCount, setFansCount] = useState(0);
-  const [commentPostId, setCommentPostId] = useState(null);
 
   const fetchData = useCallback(async () => {
     setLoading(true);
@@ -179,12 +177,6 @@ function UserProfilePage() {
       setPosts(prev => prev);
     }
   }, []);
-
-  const handleCommentCountChange = useCallback((delta) => {
-    if (commentPostId) {
-      setPosts(prev => prev.map(p => p._id === commentPostId ? { ...p, commentCount: (p.commentCount || 0) + delta } : p));
-    }
-  }, [commentPostId]);
 
   const BackBtn = () => (
     <button className={styles.backBtn} onClick={() => navigate(-1)}>
@@ -349,14 +341,14 @@ function UserProfilePage() {
                     )}
 
                     <div className={styles.postActions}>
-                      <button className={styles.actionBtn} onClick={() => setCommentPostId(post._id)}>
+                      <span className={styles.actionBtn}>
                         <span className={styles.actionIcon}>
                           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
                             <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" />
                           </svg>
                         </span>
                         <span>{post.commentCount || 0}</span>
-                      </button>
+                      </span>
 
                       <button className={`${styles.actionBtn} ${post.liked ? styles.liked : ''}`} onClick={() => handleLike(post._id)}>
                         <span className={styles.actionIcon}>
@@ -382,15 +374,6 @@ function UserProfilePage() {
             </div>
           )}
         </div>
-
-        {commentPostId && (
-          <CommentModal
-            open={!!commentPostId}
-            postId={commentPostId}
-            onClose={() => setCommentPostId(null)}
-            onCountChange={handleCommentCountChange}
-          />
-        )}
       </div>
     </div>
   );

@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Modal from '../components/Modal';
 import apiClient from '../api/axios';
+import { formatTime } from '../utils/time';
 import styles from './Messages.module.css';
 
 function SettingIcon({ hasDot }) {
@@ -19,6 +20,7 @@ function SettingIcon({ hasDot }) {
 }
 
 function ConversationItem({ item, onOpen, onDelete, deleting }) {
+  const displayTime = item.time || formatTime(item.updatedAt || item.lastMessageAt);
   return (
     <div className={`${styles.sessionItem} ${item.isPinned ? styles.sessionPinned : ''}`}>
       <button className={styles.sessionMainBtn} onClick={() => onOpen(item)}>
@@ -32,7 +34,7 @@ function ConversationItem({ item, onOpen, onDelete, deleting }) {
               <span className={styles.sessionName}>{item.nickname}</span>
               {item.isPinned && <span className={styles.pinTag}>置顶</span>}
             </div>
-            <span className={styles.sessionTime}>{item.time}</span>
+            <span className={styles.sessionTime}>{displayTime}</span>
           </div>
           <div className={styles.sessionBottom}>
             <p className={styles.sessionText}>{item.lastMessage}</p>

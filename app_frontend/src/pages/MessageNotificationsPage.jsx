@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import apiClient from '../api/axios';
+import { formatTime } from '../utils/time';
 import styles from './MessageNotifications.module.css';
 
 const filterTabs = [
@@ -178,7 +179,7 @@ function MessageNotificationsPage() {
                     <div className={styles.noticeTop}>
                       <span className={styles.noticeTitle}>{item.title}</span>
                       <div className={styles.noticeMeta}>
-                        <span className={styles.noticeTime}>{item.time}</span>
+                        <span className={styles.noticeTime}>{item.time || formatTime(item.createdAt)}</span>
                         <button
                           className={styles.noticeDeleteBtn}
                           onClick={(e) => {

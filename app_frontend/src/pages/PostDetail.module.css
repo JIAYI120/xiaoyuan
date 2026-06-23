@@ -1,7 +1,8 @@
 .page {
   position: relative;
-  width: 390px;
-  height: 844px;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
   overflow: hidden;
   display: flex;
   align-items: stretch;
@@ -11,8 +12,8 @@
 
 .phoneFrame {
   position: relative;
-  width: 390px;
-  height: 844px;
+  width: 100%;
+  height: 100%;
   flex-shrink: 0;
   overflow: hidden;
   border-radius: 0;
@@ -23,8 +24,34 @@
   justify-content: space-between;
 }
 
+/* 移动端适配 - 使用100dvh处理地址栏 */
+@media (max-width: 430px) {
+  .page {
+    height: 100vh;
+    height: 100dvh;
+  }
+  
+  .phoneFrame {
+    height: 100%;
+  }
+}
+
+/* 平板和桌面端适配 */
+@media (min-width: 768px) {
+  .page {
+    height: calc(100vh - 40px);
+    max-height: 900px;
+  }
+  
+  .phoneFrame {
+    height: 100%;
+    max-height: 900px;
+  }
+}
+
 .header {
   height: 56px;
+  padding-top: env(safe-area-inset-top);
   background: linear-gradient(180deg, rgba(255,255,255,0.98) 0%, rgba(255,255,255,0.95) 100%);
   backdrop-filter: blur(20px);
   display: flex;
@@ -37,6 +64,14 @@
   top: 0;
   z-index: 100;
   border-bottom: 1px solid rgba(0,0,0,0.03);
+  box-sizing: content-box;
+}
+
+/* 移动端安全区域适配 */
+@supports (padding-top: env(safe-area-inset-top)) {
+  .header {
+    padding-top: calc(env(safe-area-inset-top) / 2);
+  }
 }
 
 .backBtn {
@@ -73,7 +108,9 @@
 
 .content {
   flex: 1;
+  min-height: 0;
   overflow-y: auto;
+  overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
   -ms-overflow-style: none;
@@ -276,17 +313,25 @@
 .actionsBar {
   display: flex;
   justify-content: center;
-  gap: 48px;
+  gap: 32px;
   padding: 16px 20px;
   border-top: 1px solid #f5f5f5;
   background: #fafafa;
 }
 
+/* 移动端小屏幕适配 */
+@media (max-width: 375px) {
+  .actionsBar {
+    gap: 16px;
+    padding: 12px 16px;
+  }
+}
+
 .actionItem {
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 10px 20px;
+  gap: 6px;
+  padding: 8px 16px;
   background: #fff;
   border: none;
   border-radius: 24px;
@@ -296,6 +341,7 @@
   font-weight: 500;
   box-shadow: 0 2px 8px rgba(0,0,0,0.04);
   transition: all 0.25s ease;
+  white-space: nowrap;
 }
 
 .actionItem:hover {
@@ -316,6 +362,15 @@
 .actionItem.bookmarked {
   color: #f59e0b;
   background: #fffbeb;
+}
+
+/* 移动端小屏幕适配 */
+@media (max-width: 375px) {
+  .actionItem {
+    gap: 4px;
+    padding: 8px 12px;
+    font-size: 13px;
+  }
 }
 
 .loadingState {
@@ -393,11 +448,14 @@
   justify-content: center;
   z-index: 1000;
   cursor: zoom-out;
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+  box-sizing: border-box;
 }
 
 .modalImage {
   max-width: 100%;
   max-height: 100vh;
+  max-height: 100dvh;
   object-fit: contain;
 }
 
@@ -551,6 +609,15 @@
   border-top: 1px solid #f5f5f5;
   background: #fafafa;
   flex-shrink: 0;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* 移动端安全区域适配 */
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+  .commentInputBar {
+    padding-bottom: calc(12px + env(safe-area-inset-bottom));
+  }
 }
 
 .commentInput {

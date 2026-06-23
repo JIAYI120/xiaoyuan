@@ -2,12 +2,8 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import apiClient from '../api/axios';
 import { useAuth } from '../context/AuthContext';
+import { getCurrentTime, formatMessageTime } from '../utils/time';
 import styles from './Chat.module.css';
-
-function formatNow() {
-  const now = new Date();
-  return `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
-}
 
 function normalizeMessages(list = [], currentUserId) {
   return list.map((item, index) => {
@@ -19,7 +15,7 @@ function normalizeMessages(list = [], currentUserId) {
       id: item._id || item.id || `msg_${index}`,
       sender: isSelf ? 'self' : 'other',
       content: item.content || '',
-      time: item.time || item.createdAtLabel || item.createdAt || '',
+      time: item.time || item.createdAtLabel || (item.createdAt ? formatMessageTime(item.createdAt) : ''),
       sortTime: item.createdAt || item.time || index,
     };
   }).sort((a, b) => new Date(a.sortTime).getTime() - new Date(b.sortTime).getTime());
@@ -201,7 +197,7 @@ function ChatPage() {
       id: `local_${Date.now()}`,
       sender: 'self',
       content,
-      time: formatNow(),
+      time: getCurrentTime(),
       sortTime: new Date().toISOString(),
     };
 

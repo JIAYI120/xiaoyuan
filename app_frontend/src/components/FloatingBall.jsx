@@ -54,13 +54,21 @@ function FloatingBall({ onClick }) {
     }, duration);
   }, []);
 
-  const handleMouseDown = useCallback((e) => {
+  const getClientPos = (e) => {
+    if (e.touches && e.touches.length > 0) {
+      return { x: e.touches[0].clientX, y: e.touches[0].clientY };
+    }
+    return { x: e.clientX, y: e.clientY };
+  };
+
+  const handleStart = useCallback((e) => {
     if (!ballRef.current) return;
     
     const ball = ballRef.current;
     const style = window.getComputedStyle(ball);
+    const pos = getClientPos(e);
     
-    startPosRef.current = { x: e.clientX, y: e.clientY };
+    startPosRef.current = pos;
     startBallPosRef.current = {
       x: parseInt(style.left) || 0,
       y: parseInt(style.top) || 0
@@ -77,15 +85,17 @@ function FloatingBall({ onClick }) {
   useEffect(() => {
     if (!isDragging) return;
 
-    const handleMouseMove = (e) => {
+    const handleMove = (e) => {
       if (!ballRef.current) return;
       
       const ball = ballRef.current;
       const parent = ball.parentElement;
       if (!parent) return;
       
-      const deltaX = e.clientX - startPosRef.current.x;
-      const deltaY = e.clientY - startPosRef.current.y;
+      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+      const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+      const deltaX = clientX - startPosRef.current.x;
+      const deltaY = clientY - startPosRef.current.y;
       
       let newX = startBallPosRef.current.x + deltaX;
       let newY = startBallPosRef.current.y + deltaY;
@@ -104,12 +114,14 @@ function FloatingBall({ onClick }) {
       currentBallPosRef.current = { x: newX, y: newY };
     };
 
-    const handleMouseUp = (e) => {
+    const handleEnd = (e) => {
       setIsDragging(false);
       
       if (ballRef.current) {
-        const deltaX = Math.abs(e.clientX - startPosRef.current.x);
-        const deltaY = Math.abs(e.clientY - startPosRef.current.y);
+        const clientX = e.changedTouches ? e.changedTouches[0].clientX : e.clientX;
+        const clientY = e.changedTouches ? e.changedTouches[0].clientY : e.clientY;
+        const deltaX = Math.abs(clientX - startPosRef.current.x);
+        const deltaY = Math.abs(clientY - startPosRef.current.y);
         
         if (deltaX < 5 && deltaY < 5) {
           onClick?.();
@@ -123,12 +135,16 @@ function FloatingBall({ onClick }) {
       }
     };
 
-    window.addEventListener('mousemove', handleMouseMove);
-    window.addEventListener('mouseup', handleMouseUp);
+    window.addEventListener('mousemove', handleMove);
+    window.addEventListener('mouseup', handleEnd);
+    window.addEventListener('touchmove', handleMove);
+    window.addEventListener('touchend', handleEnd);
 
     return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('mouseup', handleMouseUp);
+      window.removeEventListener('mousemove', handleMove);
+      window.removeEventListener('mouseup', handleEnd);
+      window.removeEventListener('touchmove', handleMove);
+      window.removeEventListener('touchend', handleEnd);
     };
   }, [isDragging, onClick, snapToEdge]);
 
@@ -138,7 +154,8 @@ function FloatingBall({ onClick }) {
       className={`${styles.floatingBall} ${isHovered ? styles.hovered : ''} ${isDragging ? styles.dragging : ''} ${isSleeping ? styles.sleeping : ''}`}
       onMouseEnter={() => { setIsHovered(true); resetSleepTimer(); }}
       onMouseLeave={() => setIsHovered(false)}
-      onMouseDown={(e) => { resetSleepTimer(); handleMouseDown(e); }}
+      onMouseDown={(e) => { resetSleepTimer(); handleStart(e); }}
+      onTouchStart={(e) => { resetSleepTimer(); handleStart(e); }}
     >
       {showParachute && (
         <svg className={styles.parachute} viewBox="0 0 40 32" shapeRendering="crispEdges">

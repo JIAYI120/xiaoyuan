@@ -1,7 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import apiClient from '../api/axios';
-import CommentModal from './CommentModal';
 import styles from '../pages/MyPosts.module.css';
 
 function formatPostTime(dateStr) {
@@ -40,7 +39,7 @@ function TruncatedContent({ text, postId }) {
   );
 }
 
-function PostCard({ post, onLike, onComment, onBookmark, onDelete }) {
+function PostCard({ post, onLike, onBookmark, onDelete }) {
   const initial = post.nickname ? post.nickname.charAt(0).toUpperCase() : 'U';
 
   return (
@@ -73,14 +72,14 @@ function PostCard({ post, onLike, onComment, onBookmark, onDelete }) {
         </div>
       )}
       <div className={styles.postActions}>
-        <button className={styles.actionBtn} onClick={() => onComment(post._id)}>
+        <span className={styles.actionBtn}>
           <span className={styles.actionIcon}>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
               <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" />
             </svg>
           </span>
           {post.commentCount || 0}
-        </button>
+        </span>
         <button
           className={`${styles.actionBtn} ${post.liked ? styles.liked : ''}`}
           onClick={() => onLike(post._id)}
@@ -123,7 +122,6 @@ function PostCard({ post, onLike, onComment, onBookmark, onDelete }) {
 function PostList({ apiEndpoint, emptyText, emptyIcon, enableDelete = false }) {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [commentPostId, setCommentPostId] = useState(null);
 
   const fetchPosts = useCallback(async () => {
     setLoading(true);
@@ -197,11 +195,7 @@ function PostList({ apiEndpoint, emptyText, emptyIcon, enableDelete = false }) {
     }
   }, []);
 
-  const handleCommentCountChange = useCallback((delta) => {
-    if (commentPostId) {
-      setPosts(prev => prev.map(p => p._id === commentPostId ? { ...p, commentCount: (p.commentCount || 0) + delta } : p));
-    }
-  }, [commentPostId]);
+
 
   return (
     <>
@@ -235,7 +229,6 @@ function PostList({ apiEndpoint, emptyText, emptyIcon, enableDelete = false }) {
                 key={post._id}
                 post={post}
                 onLike={handleLike}
-                onComment={(id) => setCommentPostId(id)}
                 onBookmark={handleBookmark}
                 onDelete={enableDelete ? handleDelete : undefined}
               />
@@ -243,13 +236,6 @@ function PostList({ apiEndpoint, emptyText, emptyIcon, enableDelete = false }) {
           </div>
         )}
       </div>
-
-      <CommentModal
-        open={!!commentPostId}
-        postId={commentPostId}
-        onClose={() => setCommentPostId(null)}
-        onCountChange={handleCommentCountChange}
-      />
     </>
   );
 }
