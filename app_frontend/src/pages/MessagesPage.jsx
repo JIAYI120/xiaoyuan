@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import Modal from '../components/Modal';
 import apiClient from '../api/axios';
 import { formatTime } from '../utils/time';
@@ -61,6 +61,7 @@ function ConversationItem({ item, onOpen, onDelete, deleting }) {
 
 function MessagesPage() {
   const navigate = useNavigate();
+  const location = useLocation();
   const [conversations, setConversations] = useState([]);
   const [summary, setSummary] = useState({ interactionUnreadCount: 0, dmUnreadCount: 0 });
   const [deletingId, setDeletingId] = useState('');
@@ -91,6 +92,10 @@ function MessagesPage() {
   useEffect(() => {
     fetchData();
   }, [fetchData]);
+
+  useEffect(() => {
+    fetchData();
+  }, [location.pathname, fetchData]);
 
   useEffect(() => {
     const timer = window.setInterval(() => {
