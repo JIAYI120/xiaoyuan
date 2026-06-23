@@ -52,5 +52,9 @@ mongoose.connect(process.env.MONGO_URI)
   .catch(err => console.error('MongoDB connection error:', err));
 
 
+app.listen(port, '0.0.0.0', () => {
+  console.log(`xiaoyuanAPP backend is running on port ${port}`);
+});
+
 // Vercel @vercel/node 强制要求导出app实例
 module.exports = app;
