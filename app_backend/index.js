@@ -6,22 +6,7 @@ require('dotenv').config();
 const app = express();
 const port = process.env.PORT || 3000;
 
-app.use(cors({
-  origin: function (origin, callback) {
-    if (!origin) return callback(null, true);
-    
-    const allowedPatterns = [
-      /^https?:\/\/localhost:\d+$/,
-      /^[a-zA-Z0-9_-]+\.up\.railway\.app$/
-    ];
-    
-    const isAllowed = allowedPatterns.some(pattern => pattern.test(origin));
-    callback(null, isAllowed);
-  },
-  allowedHeaders: ['Content-Type', 'x-auth-token'],
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
-}));
-
+// 1. 先处理OPTIONS预检请求（放cors前面）
 app.use((req, res, next) => {
   if (req.method === 'OPTIONS') {
     return res.sendStatus(204);
@@ -29,19 +14,27 @@ app.use((req, res, next) => {
   next();
 });
 
+// 2. 再配置CORS白名单（兼容本地localhost+线上域名）
+app.use(cors({
+  origin: /^(http:\/\/localhost:\d+)|(\.(vercel\.app|up\.railway\.app))$/,
+  allowedHeaders: ['Content-Type', 'x-auth-token'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
+}));
+
 app.use(express.json());
 
-app.get('/', (req, res) => {
-  res.send('Hello, xiaoyuanAPP!');
-});
-
-
+// 日志中间件
 app.use((req, res, next) => {
   console.log(`${new Date().toISOString()} ${req.method} ${req.path}`);
   next();
 });
 
-// 所有业务路由挂载
+// 根路由
+app.get('/', (req, res) => {
+  res.send('Hello, xiaoyuanAPP!');
+});
+
+// 业务路由
 app.use('/api/users', require('./routes/users'));
 app.use('/api/profile', require('./routes/profile'));
 app.use('/api/posts', require('./routes/posts'));
@@ -52,15 +45,13 @@ app.use('/api/bookmarks', require('./routes/bookmarks'));
 app.use('/api/messages', require('./routes/messages'));
 app.use('/api/ai', require('./routes/ai'));
 
-// 连接MongoDB数据库
+// 数据库连接
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('MongoDB connected successfully!'))
   .catch(err => console.error('MongoDB connection error:', err));
-
 
 app.listen(port, '0.0.0.0', () => {
   console.log(`xiaoyuanAPP backend is running on port ${port}`);
 });
 
-// Vercel @vercel/node 强制要求导出app实例
 module.exports = app;
