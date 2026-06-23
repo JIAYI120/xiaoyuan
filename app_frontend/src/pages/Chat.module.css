@@ -1,8 +1,8 @@
 .page {
   position: relative;
   width: 100%;
-  min-height: 100vh;
-  min-height: 100dvh;
+  height: 100vh;
+  height: 100dvh;
   overflow: hidden;
   display: flex;
   align-items: stretch;
@@ -13,8 +13,8 @@
 .phoneFrame {
   position: relative;
   width: 100%;
-  min-height: 100vh;
-  min-height: 100dvh;
+  height: 100vh;
+  height: 100dvh;
   flex-shrink: 0;
   overflow: hidden;
   border-radius: 0;
@@ -27,25 +27,25 @@
 /* 移动端适配 */
 @media (max-width: 430px) {
   .page {
-    min-height: 100vh;
-    min-height: 100dvh;
+    height: 100vh;
+    height: 100dvh;
   }
   
   .phoneFrame {
-    min-height: 100vh;
-    min-height: 100dvh;
+    height: 100vh;
+    height: 100dvh;
   }
 }
 
 /* 平板和桌面端适配 */
 @media (min-width: 768px) {
   .page {
-    min-height: calc(100vh - 40px);
+    height: calc(100vh - 40px);
     max-height: 900px;
   }
   
   .phoneFrame {
-    min-height: calc(100vh - 40px);
+    height: calc(100vh - 40px);
     max-height: 900px;
   }
 }
