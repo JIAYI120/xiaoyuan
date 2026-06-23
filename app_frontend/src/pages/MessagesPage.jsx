@@ -62,22 +62,16 @@ function ConversationItem({ item, onOpen, onDelete, deleting }) {
 function MessagesPage() {
   const navigate = useNavigate();
   const [conversations, setConversations] = useState([]);
-  const [summary, setSummary] = useState({ interactionUnreadCount: 0, dmUnreadCount: 0 });
   const [deletingId, setDeletingId] = useState('');
   const [pendingDeleteItem, setPendingDeleteItem] = useState(null);
   const [deleteError, setDeleteError] = useState('');
 
   const fetchData = useCallback(async () => {
     try {
-      const [conversationRes, summaryRes] = await Promise.all([
-        apiClient.get('/messages/conversations'),
-        apiClient.get('/messages/summary'),
-      ]);
+      const conversationRes = await apiClient.get('/messages/conversations');
       setConversations(conversationRes.data || []);
-      setSummary(summaryRes.data || { interactionUnreadCount: 0, dmUnreadCount: 0 });
     } catch {
       setConversations([]);
-      setSummary({ interactionUnreadCount: 0, dmUnreadCount: 0 });
     }
   }, []);
 
@@ -123,7 +117,7 @@ function MessagesPage() {
     };
   }, [fetchData]);
 
-  const hasInteractiveUnread = summary.interactionUnreadCount > 0;
+  
 
   const handleOpenConversation = (item) => {
     navigate(`/messages/${item.userId}`, {
@@ -151,10 +145,6 @@ function MessagesPage() {
     try {
       await apiClient.delete(`/messages/conversations/${pendingDeleteItem.id}`);
       setConversations(prev => prev.filter(conv => conv.id !== pendingDeleteItem.id));
-      setSummary(prev => ({
-        ...prev,
-        dmUnreadCount: Math.max(0, (prev.dmUnreadCount || 0) - (pendingDeleteItem.unreadCount || 0)),
-      }));
       setPendingDeleteItem(null);
     } catch (err) {
       setDeleteError(err.response?.data?.msg || '删除聊天失败');
@@ -185,7 +175,7 @@ function MessagesPage() {
             <div className={styles.noticeTitle}>互动提示</div>
             <div className={styles.noticeDesc}>点赞、评论、收藏和关注提醒统一查看</div>
           </div>
-          {hasInteractiveUnread && <span className={styles.noticeDot} />}
+          
           <span className={styles.noticeArrow}>
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <polyline points="9 18 15 12 9 6" />
