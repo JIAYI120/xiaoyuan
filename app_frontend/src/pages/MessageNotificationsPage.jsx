@@ -48,19 +48,16 @@ function MessageNotificationsPage() {
   };
 
   useEffect(() => {
-    fetchNotices(1, false);
-  }, []);
-
-  useEffect(() => {
-    const markAllRead = async () => {
+    const init = async () => {
+      await fetchNotices(1, false);
       try {
         await apiClient.patch('/messages/notifications/read-all');
         setNotices(prev => prev.map(item => ({ ...item, isRead: true })));
       } catch {
-        setNotices(prev => prev);
+        // ignore
       }
     };
-    markAllRead();
+    init();
   }, []);
 
   const filteredNotices = useMemo(() => {
