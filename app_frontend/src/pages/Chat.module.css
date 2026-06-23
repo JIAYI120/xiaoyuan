@@ -2,6 +2,7 @@
   position: relative;
   width: 100%;
   min-height: 100vh;
+  min-height: 100dvh;
   overflow: hidden;
   display: flex;
   align-items: stretch;
@@ -13,6 +14,7 @@
   position: relative;
   width: 100%;
   min-height: 100vh;
+  min-height: 100dvh;
   flex-shrink: 0;
   overflow: hidden;
   border-radius: 0;
@@ -26,10 +28,12 @@
 @media (max-width: 430px) {
   .page {
     min-height: 100vh;
+    min-height: 100dvh;
   }
   
   .phoneFrame {
     min-height: 100vh;
+    min-height: 100dvh;
   }
 }
 
