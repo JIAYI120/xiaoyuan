@@ -1221,7 +1221,7 @@ function DashboardPage() {
               <button key={t.key} className={`${styles.tab} ${active ? styles.active : ''}`} onClick={() => handleClick(t.key)}>
                 {t.key === 'home' && <HomeIcon />}
                 {t.key === 'friends' && <FriendsIcon />}
-                {t.key === 'message' && <MessageIcon hasUnread={unreadCounts.dm > 0 || unreadCounts.interaction > 0} />}
+                {t.key === 'message' && <MessageIcon hasUnread={unreadCounts.dm > 0} />}
                 {t.key === 'mine' && <MineIcon />}
                 <span className={styles.tabLabel}>{t.label}</span>
               </button>
