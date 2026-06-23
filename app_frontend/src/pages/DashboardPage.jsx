@@ -1157,6 +1157,10 @@ function DashboardPage() {
     }
   }, [activeTab, fetchUnreadCounts]);
 
+  useEffect(() => {
+    fetchUnreadCounts();
+  }, [location.key, fetchUnreadCounts]);
+
   const setTabWithUrl = useCallback((tab) => {
     setActiveTab(tab);
     setSearchParams({ tab }, { replace: true });
