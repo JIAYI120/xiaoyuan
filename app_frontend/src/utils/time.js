@@ -1,26 +1,15 @@
 /**
- * 将UTC时间转换为北京时间(UTC+8)
- * @param {Date} date - Date对象
- * @returns {Date} 转换后的Date对象
- */
-function convertUTCToBeijing(date) {
-  const utc = new Date(date);
-  const beijingTime = new Date(utc.getTime() + 8 * 60 * 60 * 1000);
-  return beijingTime;
-}
-
-/**
  * 格式化时间显示
- * @param {string|Date} dateStr - 日期字符串或Date对象（UTC时间）
- * @returns {string} 格式化后的时间字符串（北京时间）
+ * @param {string|Date} dateStr - 日期字符串或Date对象
+ * @returns {string} 格式化后的时间字符串
  */
 export function formatTime(dateStr) {
-  const date = convertUTCToBeijing(new Date(dateStr));
+  const date = new Date(dateStr);
   if (Number.isNaN(date.getTime())) {
     return '';
   }
 
-  const now = convertUTCToBeijing(new Date());
+  const now = new Date();
   const diff = now.getTime() - date.getTime();
   const absDiff = Math.abs(diff);
 
@@ -75,16 +64,16 @@ export function formatTime(dateStr) {
 
 /**
  * 格式化聊天消息时间
- * @param {string|Date} dateStr - 日期字符串或Date对象（UTC时间）
- * @returns {string} 格式化后的时间字符串（北京时间）
+ * @param {string|Date} dateStr - 日期字符串或Date对象
+ * @returns {string} 格式化后的时间字符串
  */
 export function formatMessageTime(dateStr) {
-  const date = convertUTCToBeijing(new Date(dateStr));
+  const date = new Date(dateStr);
   if (Number.isNaN(date.getTime())) {
     return '';
   }
 
-  const now = convertUTCToBeijing(new Date());
+  const now = new Date();
   const sameYear = now.getFullYear() === date.getFullYear();
   const sameDay = sameYear &&
     now.getMonth() === date.getMonth() &&
