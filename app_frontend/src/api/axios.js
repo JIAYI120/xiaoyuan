@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const apiClient = axios.create({
-  baseURL: 'appbackend-zjy.up.railway.app',
+  baseURL: 'https://appbackend-zjy.up.railway.app',
   headers: {
     'Content-Type': 'application/json',
   },
