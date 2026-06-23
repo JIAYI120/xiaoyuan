@@ -7,7 +7,17 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 app.use(cors({
-  origin: /^(https?:\/\/localhost:\d+|[a-zA-Z0-9_-]+\.up\.railway\.app)$/,
+  origin: function (origin, callback) {
+    if (!origin) return callback(null, true);
+    
+    const allowedPatterns = [
+      /^https?:\/\/localhost:\d+$/,
+      /^[a-zA-Z0-9_-]+\.up\.railway\.app$/
+    ];
+    
+    const isAllowed = allowedPatterns.some(pattern => pattern.test(origin));
+    callback(null, isAllowed);
+  },
   allowedHeaders: ['Content-Type', 'x-auth-token'],
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
 }));
