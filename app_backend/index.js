@@ -51,12 +51,6 @@ mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('MongoDB connected successfully!'))
   .catch(err => console.error('MongoDB connection error:', err));
 
-// 仅本地开发启动监听，Vercel线上不需要listen
-if (process.env.NODE_ENV !== 'production') {
-  app.listen(port, () => {
-    console.log(`xiaoyuanAPP backend is running at http://localhost:${port}`);
-  });
-}
 
 // Vercel @vercel/node 强制要求导出app实例
 module.exports = app;
