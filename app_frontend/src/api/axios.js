@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const apiClient = axios.create({
-  baseURL: 'https://appbackend-topaz.vercel.app/api',
+  baseURL: 'appbackend-zjy.up.railway.app',
   headers: {
     'Content-Type': 'application/json',
   },
